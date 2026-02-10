@@ -1,2 +1,2 @@
 # Team_2
-Capstone projedt
+Capstone project
