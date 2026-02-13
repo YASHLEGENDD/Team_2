@@ -12,7 +12,7 @@ import com.employee.management.hrms.entity.LeaveStatus;
 import com.employee.management.hrms.entity.LeaveType;
 
 @Repository
-public interface LeaveRepository extends JpaRepository<LeaveRequest, Integer> {
+public interface LeaveRequest_Repository extends JpaRepository<LeaveRequest, Integer> {
 
     // 📌 Get all leave requests of a specific employee
     List<LeaveRequest> findByEmployee(Employee employee);
