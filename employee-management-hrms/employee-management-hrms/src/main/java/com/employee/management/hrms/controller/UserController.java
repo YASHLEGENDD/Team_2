@@ -1,5 +1,6 @@
 package com.employee.management.hrms.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,41 +11,63 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.employee.management.hrms.service.serviceImp.UserServiceImp;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-		private UserServiceImp service;
-		
-		public UserController(UserService service) {
-			this.service = service;
-		}
-		
-		@PostMapping
-		public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO dto){
-			ResponseEntity<UserDTO> resp;
-			resp = new ResponseEntity<>(service.createUser(dto),HttpStatus.CREATED);
-			return repo;
-			
-		}
-		
-		//get User By ID
-		@GetMapping("/{id}")
-		public ResponseEntity<UseDTO> getUserById(@PathVariable Integer id){
-			return new ResponseEntity<>(service.getUserById(id),HttpStatus.OK);
-		}
-		
-		//Update User
-		@GetMapping
-		public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id, @RequsetBody UserDTO dto){
-			return new ResponseEntity<>(service.updateUser(Id, dto), HttpStatus.OK);
-		}
-		
-		//Delete User
-		@DeleteMapping("/{id}")
-		public ResponseEntity<String> deleteUser(@PathVariable Integer id){
-		service.deleteUser(id);
-		return new ResponseEntity<>("User Delete Suceessfully!",HttpStatus.OK);
-		}
+
+    private UserServiceImp service;
+    
+    @Autowired
+    public UserController(UserServiceImp service) {
+    	this.service = service;
+    }
+
+    //Register  User
+    @PostMapping
+    public ResponseEntity<UserResponseDTO> createUser(
+            @RequestBody UserRequestDTO userRequestDTO) {
+
+        UserResponseDTO createdUser = userService.createUser(userRequestDTO);
+        return ResponseEntity.ok(createdUser);
+    }
+
+    // ✅ Get User By ID
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
+
+        UserResponseDTO user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
+    }
+
+    // ✅ Get All Users
+    @GetMapping
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+
+        List<UserResponseDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    // ✅ Update User
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> updateUser(
+            @PathVariable Long id,
+            @RequestBody UserRequestDTO userRequestDTO) {
+
+        UserResponseDTO updatedUser =
+                userService.updateUser(id, userRequestDTO);
+
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    // ✅ Delete User
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+
+        userService.deleteUser(id);
+        return ResponseEntity.ok("User deleted successfully");
+    
 
 	}
 
