@@ -1,12 +1,8 @@
 package com.employee.management.hrms.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -14,7 +10,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private Long userId;
 
     private String fullName;
 
@@ -23,25 +19,25 @@ public class User {
 
     private String password;
 
-    
+    @Enumerated(EnumType.STRING)
     private Role role;
 
-    
+    @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
-   
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     // One-to-One with Employee
-    @OneToOne
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Employee employee;
     
     // Getters & Setters
 
-	public int getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -85,6 +81,13 @@ public class User {
 		this.accountStatus = accountStatus;
 	}
 
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
 	public Employee getEmployee() {
 		return employee;

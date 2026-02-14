@@ -27,7 +27,7 @@ public class UserServiceImp implements UserService {
 			dto.setFullName(user.getFullName());
 			dto.setEmail(user.getEmail());
 			dto.setPassword(user.getPassword());
-			dto.setRole(user.getRole());
+			dto.setRole(user.getRole());;
 			dto.setAccountStatus(user.getAccountStatus());
 			
 			return dto;
