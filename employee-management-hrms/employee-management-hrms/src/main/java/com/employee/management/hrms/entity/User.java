@@ -1,7 +1,12 @@
 package com.employee.management.hrms.entity;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -30,7 +35,7 @@ public class User {
     @OneToOne
     private Employee employee;
     
- // Getters & Setters
+    // Getters & Setters
 
 	public int getUserId() {
 		return userId;

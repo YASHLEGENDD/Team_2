@@ -42,7 +42,7 @@ public class Employee {
     @OneToMany
     private List<LeaveRequest> leaveRequests;
     
-    //// Getters & Setters
+    // Getters & Setters
 
 	public int getEmployeeId() {
 		return employeeId;
