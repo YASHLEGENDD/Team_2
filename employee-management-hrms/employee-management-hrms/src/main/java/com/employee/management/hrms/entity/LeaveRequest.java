@@ -1,141 +1,114 @@
 package com.employee.management.hrms.entity;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
-
-
 
 @Entity
 @Table(name = "leave_requests")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class LeaveRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "leave_id")
-    private Integer leaveId;
+    private Long leaveRequestId;
 
-    // Many leave requests belong to one employee
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
-
-    // Enum Leave Type
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
-    private LeaveType leaveType;
-
-    @Column(nullable = false)
     private LocalDate startDate;
-
-    @Column(nullable = false)
     private LocalDate endDate;
 
-    // Enum Leave Status
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private LeaveStatus status = LeaveStatus.PENDING;
-
-    @Column(length = 255)
     private String reason;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime appliedAt;
+    private LocalDate appliedDate = LocalDate.now();
 
-    // Automatically set timestamp before insert
-    @PrePersist
-    protected void onCreate() {
-        this.appliedAt = LocalDateTime.now();
-    }
+    @Enumerated(EnumType.STRING)
+    private LeaveStatus status = LeaveStatus.PENDING;
 
-    // Constructors
-    public LeaveRequest() {}
+    // Many Requests -> One Employee
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
-    public LeaveRequest(Employee employee, LeaveType leaveType,
-                        LocalDate startDate, LocalDate endDate,
-                        String reason) {
-        this.employee = employee;
-        this.leaveType = leaveType;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.reason = reason;
-        this.status = LeaveStatus.PENDING;
-    }
+    // Many Requests -> One LeaveType
+    @ManyToOne
+    @JoinColumn(name = "leave_type_id")
+    private LeaveType leaveType;
 
-    // Getters and Setters
+    // Approved by Manager
+    @ManyToOne
+    @JoinColumn(name = "approved_by")
+    private Employee approvedBy;
+    
+ // Getters & Setters
 
-    public Integer getLeaveId() {
-        return leaveId;
-    }
+	public Long getLeaveRequestId() {
+		return leaveRequestId;
+	}
 
-    public void setLeaveId(Integer leaveId) {
-        this.leaveId = leaveId;
-    }
+	public void setLeaveRequestId(Long leaveRequestId) {
+		this.leaveRequestId = leaveRequestId;
+	}
 
-    public Employee getEmployee() {
-        return employee;
-    }
+	public LocalDate getStartDate() {
+		return startDate;
+	}
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
 
-    public LeaveType getLeaveType() {
-        return leaveType;
-    }
+	public LocalDate getEndDate() {
+		return endDate;
+	}
 
-    public void setLeaveType(LeaveType leaveType) {
-        this.leaveType = leaveType;
-    }
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
+	public String getReason() {
+		return reason;
+	}
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
+	public LocalDate getAppliedDate() {
+		return appliedDate;
+	}
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
+	public void setAppliedDate(LocalDate appliedDate) {
+		this.appliedDate = appliedDate;
+	}
 
-    public LeaveStatus getStatus() {
-        return status;
-    }
+	public LeaveStatus getStatus() {
+		return status;
+	}
 
-    public void setStatus(LeaveStatus status) {
-        this.status = status;
-    }
+	public void setStatus(LeaveStatus status) {
+		this.status = status;
+	}
 
-    public String getReason() {
-        return reason;
-    }
+	public Employee getEmployee() {
+		return employee;
+	}
 
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 
-    public LocalDateTime getAppliedAt() {
-        return appliedAt;
-    }
+	public LeaveType getLeaveType() {
+		return leaveType;
+	}
+
+	public void setLeaveType(LeaveType leaveType) {
+		this.leaveType = leaveType;
+	}
+
+	public Employee getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(Employee approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+    
 }

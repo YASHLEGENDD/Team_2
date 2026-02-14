@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.employee.management.hrms.entity.LeaveRequest;
 
 @Repository
-public interface LeaveStatus_repository extends JpaRepository<LeaveRequest, Integer >{
-	//leave re
+public interface LeaveStatusRepository extends JpaRepository<LeaveRequest, Integer >{
+
 
 }

@@ -1,39 +1,56 @@
 package com.employee.management.hrms.entity;
 
-public enum LeaveType {
+import jakarta.persistence.*;
+import java.util.List;
 
-    CASUAL("Casual Leave", "Short-term personal leave"),
-    SICK("Sick Leave", "Medical or health-related leave"),
-    PAID("Paid Leave", "Official paid leave"),
-    UNPAID("Unpaid Leave", "Leave without salary deduction benefits"),
-    MATERNITY("Maternity Leave", "Leave for childbirth and recovery"),
-    PATERNITY("Paternity Leave", "Leave for father after childbirth");
+@Entity
+@Table(name = "leave_types")
+public class LeaveType {
 
-    private final String displayName;
-    private final String description;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long leaveTypeId;
 
-    // Constructor
-    LeaveType(String displayName, String description) {
-        this.displayName = displayName;
-        this.description = description;
-    }
+    private String leaveName; // Casual, Sick, Earned
 
-    // Getters
-    public String getDisplayName() {
-        return displayName;
-    }
+    private int maxDaysPerYear;
 
-    public String getDescription() {
-        return description;
-    }
+    @OneToMany(mappedBy = "leaveType")
+    private List<LeaveRequest> leaveRequests;
+    
+ // Getters & Setters
 
-    // Utility method to convert String to Enum safely
-    public static LeaveType fromString(String value) {
-        for (LeaveType type : LeaveType.values()) {
-            if (type.name().equalsIgnoreCase(value)) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("Invalid Leave Type: " + value);
-    }
+	public Long getLeaveTypeId() {
+		return leaveTypeId;
+	}
+
+	public void setLeaveTypeId(Long leaveTypeId) {
+		this.leaveTypeId = leaveTypeId;
+	}
+
+	public String getLeaveName() {
+		return leaveName;
+	}
+
+	public void setLeaveName(String leaveName) {
+		this.leaveName = leaveName;
+	}
+
+	public int getMaxDaysPerYear() {
+		return maxDaysPerYear;
+	}
+
+	public void setMaxDaysPerYear(int maxDaysPerYear) {
+		this.maxDaysPerYear = maxDaysPerYear;
+	}
+
+	public List<LeaveRequest> getLeaveRequests() {
+		return leaveRequests;
+	}
+
+	public void setLeaveRequests(List<LeaveRequest> leaveRequests) {
+		this.leaveRequests = leaveRequests;
+	}
+
+    
 }

@@ -1,141 +1,120 @@
 package com.employee.management.hrms.entity;
 
+
+import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employee_id")
-    private Integer employeeId;
+    private Long employeeId;
 
-    @Column(nullable = false)
-    private String name;
+    private String employeeCode;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false, length = 15)
-    private String phone;
-
-    @Column(nullable = false)
     private String designation;
 
-    @Column(nullable = false)
     private LocalDate joiningDate;
 
-    // 🔥 Proper Relationship Instead of int departmentId
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id", nullable = false)
+    // One-to-One User
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    // Many Employees -> One Department
+    @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
 
-    // Optional self-reference for manager
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Self Referencing Manager
+    @ManyToOne
     @JoinColumn(name = "manager_id")
     private Employee manager;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    // Employees under Manager
+    @OneToMany(mappedBy = "manager")
+    private List<Employee> subordinates;
 
-    public Employee() {}
+    // Leave Requests
+    @OneToMany(mappedBy = "employee")
+    private List<LeaveRequest> leaveRequests;
+    
+    //// Getters & Setters
 
-    public Employee(String name, String email, String phone,
-                    String designation, LocalDate joiningDate,
-                    Department department, Employee manager) {
+	public Long getEmployeeId() {
+		return employeeId;
+	}
 
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.designation = designation;
-        this.joiningDate = joiningDate;
-        this.department = department;
-        this.manager = manager;
-    }
+	public void setEmployeeId(Long employeeId) {
+		this.employeeId = employeeId;
+	}
 
-    // Getters and Setters
+	public String getEmployeeCode() {
+		return employeeCode;
+	}
 
-    public Integer getEmployeeId() {
-        return employeeId;
-    }
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
+	}
 
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
-    }
+	public String getDesignation() {
+		return designation;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public LocalDate getJoiningDate() {
+		return joiningDate;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setJoiningDate(LocalDate joiningDate) {
+		this.joiningDate = joiningDate;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public Department getDepartment() {
+		return department;
+	}
 
-    public String getDesignation() {
-        return designation;
-    }
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
 
-    public void setDesignation(String designation) {
-        this.designation = designation;
-    }
+	public Employee getManager() {
+		return manager;
+	}
 
-    public LocalDate getJoiningDate() {
-        return joiningDate;
-    }
+	public void setManager(Employee manager) {
+		this.manager = manager;
+	}
 
-    public void setJoiningDate(LocalDate joiningDate) {
-        this.joiningDate = joiningDate;
-    }
+	public List<Employee> getSubordinates() {
+		return subordinates;
+	}
 
-    public Department getDepartment() {
-        return department;
-    }
+	public void setSubordinates(List<Employee> subordinates) {
+		this.subordinates = subordinates;
+	}
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
+	public List<LeaveRequest> getLeaveRequests() {
+		return leaveRequests;
+	}
 
-    public Employee getManager() {
-        return manager;
-    }
+	public void setLeaveRequests(List<LeaveRequest> leaveRequests) {
+		this.leaveRequests = leaveRequests;
+	}
 
-    public void setManager(Employee manager) {
-        this.manager = manager;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+    
 }
