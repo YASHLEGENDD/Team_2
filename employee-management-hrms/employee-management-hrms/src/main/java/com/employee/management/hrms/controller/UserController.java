@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.booking.app.dto.UserDTO;
 import com.employee.management.hrms.dto.UserDto;
 import com.employee.management.hrms.service.serviceImp.UserServiceImp;
 
@@ -51,8 +49,8 @@ public class UserController {
 	
 	//Update User
 	@PutMapping
-	public ResponseEntity<UserDto> updateUser(@PathVariable Integer Id, @RequestBody UserDTO dto){
-		return new ResponseEntity<>(service.updateUser(Id, dto), HttpStatus.OK);
+	public ResponseEntity<UserDto> updateUser(@PathVariable Integer Id, @RequestBody UserDto dto){
+		return new ResponseEntity<>(service.UpadateUser(Id, dto), HttpStatus.OK);
 	}
 	
 	//Delete User

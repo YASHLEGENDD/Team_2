@@ -9,7 +9,7 @@ public class LeaveRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long leaveRequestId;
+    private int leaveRequestId;
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -18,7 +18,7 @@ public class LeaveRequest {
 
     private LocalDate appliedDate = LocalDate.now();
 
-    @Enumerated(EnumType.STRING)
+    
     private LeaveStatus status = LeaveStatus.PENDING;
 
     // Many Requests -> One Employee
@@ -38,11 +38,11 @@ public class LeaveRequest {
     
  // Getters & Setters
 
-	public Long getLeaveRequestId() {
+	public int getLeaveRequestId() {
 		return leaveRequestId;
 	}
 
-	public void setLeaveRequestId(Long leaveRequestId) {
+	public void setLeaveRequestId(int leaveRequestId) {
 		this.leaveRequestId = leaveRequestId;
 	}
 

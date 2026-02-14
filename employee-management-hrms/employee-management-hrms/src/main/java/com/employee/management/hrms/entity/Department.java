@@ -9,22 +9,22 @@
 
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private Long departmentId;
+     private int departmentId;
 
      private String departmentName;
 
      private String description;
 
-     @OneToMany(mappedBy = "department")
+     @OneToMany
      private List<Employee> employees;
      
      // Getters & Setters
 
-	 public Long getDepartmentId() {
+	 public int getDepartmentId() {
 		 return departmentId;
 	 }
 
-	 public void setDepartmentId(Long departmentId) {
+	 public void setDepartmentId(int departmentId) {
 		 this.departmentId = departmentId;
 	 }
 

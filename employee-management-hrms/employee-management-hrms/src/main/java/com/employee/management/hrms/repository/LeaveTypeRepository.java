@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.employee.management.hrms.entity.LeaveType;
 @Repository
-public interface LeaveTypeRepository extends JpaRepository<LeaveType, Long> {
+public interface LeaveTypeRepository extends JpaRepository<LeaveType, Integer> {
 
     Optional<LeaveType> findByLeaveName(String leaveName);
 }

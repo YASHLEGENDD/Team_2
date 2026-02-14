@@ -9,22 +9,22 @@ public class LeaveType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long leaveTypeId;
+    private int leaveTypeId;
 
     private String leaveName; // Casual, Sick, Earned
 
     private int maxDaysPerYear;
 
-    @OneToMany(mappedBy = "leaveType")
+    @OneToMany
     private List<LeaveRequest> leaveRequests;
     
  // Getters & Setters
 
-	public Long getLeaveTypeId() {
+	public int getLeaveTypeId() {
 		return leaveTypeId;
 	}
 
-	public void setLeaveTypeId(Long leaveTypeId) {
+	public void setLeaveTypeId(int leaveTypeId) {
 		this.leaveTypeId = leaveTypeId;
 	}
 

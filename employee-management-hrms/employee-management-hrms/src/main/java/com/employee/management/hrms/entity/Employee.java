@@ -11,7 +11,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long employeeId;
+    private int employeeId;
 
     private String employeeCode;
 
@@ -35,20 +35,20 @@ public class Employee {
     private Employee manager;
 
     // Employees under Manager
-    @OneToMany(mappedBy = "manager")
+    @OneToMany
     private List<Employee> subordinates;
 
     // Leave Requests
-    @OneToMany(mappedBy = "employee")
+    @OneToMany
     private List<LeaveRequest> leaveRequests;
     
     //// Getters & Setters
 
-	public Long getEmployeeId() {
+	public int getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(Long employeeId) {
+	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
 

@@ -9,7 +9,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private int userId;
 
     private String fullName;
 
@@ -18,25 +18,25 @@ public class User {
 
     private String password;
 
-    @Enumerated(EnumType.STRING)
+    
     private Role role;
 
-    @Enumerated(EnumType.STRING)
+    
     private AccountStatus accountStatus;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+   
 
     // One-to-One with Employee
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne
     private Employee employee;
     
  // Getters & Setters
 
-	public Long getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
@@ -80,13 +80,6 @@ public class User {
 		this.accountStatus = accountStatus;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
 
 	public Employee getEmployee() {
 		return employee;
