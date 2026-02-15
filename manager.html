@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Dashboard</title>
+    <link rel="stylesheet" href="manager.css">
+</head>
+<body>
+
+
+    <div class="overlay">
+        <button id="logoutBtn">Logout</button>
+        <div class="container">
+            
+          <header>
+                <h1>Manager Dashboard</h1>
+                <p>Review and manage team leave requests</p>
+         </header>
+
+        <!-- Review & Approve Section -->
+        <section class="card">
+            <h2>Pending Leave Requests</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Leave Type</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaveTableBody">
+                        <tr>
+                            <td>Ram</td>
+                            <td>Annual Leave</td>
+                            <td>10 Mar 2026</td>
+                            <td>12 Mar 2026</td>
+                            <td>
+                                <button class="approve">Approve</button>
+                                <button class="reject">Reject</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Sham</td>
+                            <td>Sick Leave</td>
+                            <td>15 Mar 2026</td>
+                            <td>16 Mar 2026</td>
+                            <td>
+                                <button class="approve">Approve</button>
+                                <button class="reject">Reject</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Team Leave Status Section -->
+            <section class="card">
+                <h2>Team Leave Status</h2>
+
+                <div class="status-grid">
+                    <div class="status-card available">
+                        <h3>Available Today</h3>
+                        <p>8 Employees</p>
+                    </div>
+
+                    <div class="status-card onleave">
+                        <h3>On Leave</h3>
+                        <p>2 Employees</p>
+                    </div>
+
+                    <div class="status-card pending">
+                        <h3>Pending Requests</h3>
+                        <p>3 Requests</p>
+                    </div>
+
+                    
+                </div>
+                
+ 
+                
+
+            </section>
+
+            <section class="card">
+               <div>
+                    <h2 class="section-title">Request Leave</h2>
+                      <form>
+                          <input type="text" placeholder="Employee Name" required>
+                          <input type="date" required>
+                          <input type="date" required>
+                          <button type="submit">Submit</button>
+                      </form>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="manager.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-image: url(bg.png);
+    background-size: 100%;
+    /* background: linear-gradient(135deg, #667eea, #764ba2); */
+    min-height: 100vh;
+    padding: 40px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Header */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    color: white;
+}
+
+header h1 {
+    font-size: 32px;
+}
+
+.add-btn {
+    background: white;
+    color: #764ba2;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.add-btn:hover {
+    background: #17f025;
+}
+
+/* Department Cards */
+
+.department-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.department-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+
+.department-card:hover {
+    transform: translateY(-8px);
+}
+
+.department-card h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.department-card p {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.department-card button {
+    margin-top: 15px;
+    padding: 8px 15px;
+    border: none;
+    background: #667eea;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.department-card button:hover {
+    background: #5a67d8;
+}

@@ -1,0 +1,157 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Background Image */
+body {
+    height: 100vh;
+    background: url(bg.png);
+}
+
+/* Dark Overlay */
+.overlay {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+        rgba(28, 28, 92, 0.75),
+        rgba(0, 0, 80, 0.85)
+    );
+    padding: 40px 20px;
+}
+
+/* Container */
+.container {
+    max-width: 1100px;
+    margin: auto;
+    color: white;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 36px;
+    letter-spacing: 1px;
+}
+
+header p {
+    opacity: 0.8;
+}
+
+/* Card Design */
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 12px;
+    transition: 0.3s;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card h2 {
+    margin-bottom: 15px;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+thead {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+th, td {
+    padding: 12px;
+}
+
+tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Buttons */
+button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 2px;
+}
+
+.approve {
+    background-color: #00c853;
+    color: white;
+}
+
+.reject {
+    background-color: #d50000;
+    color: white;
+}
+
+.approve:hover {
+    background-color: #00e676;
+}
+
+.reject:hover {
+    background-color: #ff1744;
+}
+
+/* Status Grid */
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.status-card {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+.status-card:hover{
+     transform: translateY(-10px);
+}
+
+/* .section-title{
+    margin-top:30px;
+    color: white;
+} */
+
+.available {
+    background: linear-gradient(135deg, #56558f, #9266f0);
+}
+
+.onleave {
+    background: linear-gradient(135deg, #56558f, #9266f0);
+}
+
+.pending {
+    background: linear-gradient(135deg, #56558f, #9266f0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 26px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+}

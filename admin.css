@@ -1,0 +1,117 @@
+body{
+    margin:0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    display:flex;
+    justify-content:center;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+   background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    margin:30px 0;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    
+}
+
+h1{
+    text-align:center;
+    color : white;
+}
+
+.cards{
+    display:flex;
+    gap:15px;
+    justify-content:space-between;
+    margin:20px 0;
+}
+
+.card{
+    flex:1;
+    background: rgb(255, 255, 255);
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.card:hover{
+    background:hsl(267, 80%, 52%);
+    color:white;
+    transform:scale(1.05);
+}
+
+.section-title{
+    margin-top:30px;
+    color: white;
+}
+
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th,td{
+    padding:10px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+th{
+    background:hsl(267, 80%, 52%);
+    color:white;
+}
+
+.active{
+    color:rgb(3, 238, 3);
+    font-weight:bold;
+}
+
+.leave{
+    color:red;
+    font-weight:bold;
+}
+
+form{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+form input{
+    padding:8px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+button{
+    padding:8px 15px;
+    background:#667eea;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#5a67d8;
+}
+
+.department-card {
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.department-card:hover {
+    transform: translateY(-5px);
+     background:hsl(267, 80%, 52%);
+    color: white;
+}
