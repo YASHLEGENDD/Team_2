@@ -1,7 +1,16 @@
 package com.employee.management.hrms.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "leave_requests")
@@ -9,7 +18,7 @@ public class LeaveRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int leaveRequestId;
+    private Long leaveRequestId;
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -18,7 +27,7 @@ public class LeaveRequest {
 
     private LocalDate appliedDate = LocalDate.now();
 
-    
+    @Enumerated(EnumType.STRING)
     private LeaveStatus status = LeaveStatus.PENDING;
 
     // Many Requests -> One Employee
@@ -36,13 +45,13 @@ public class LeaveRequest {
     @JoinColumn(name = "approved_by")
     private Employee approvedBy;
     
- // Getters & Setters
+    // Getters & Setters
 
-	public int getLeaveRequestId() {
+	public Long getLeaveRequestId() {
 		return leaveRequestId;
 	}
 
-	public void setLeaveRequestId(int leaveRequestId) {
+	public void setLeaveRequestId(Long leaveRequestId) {
 		this.leaveRequestId = leaveRequestId;
 	}
 

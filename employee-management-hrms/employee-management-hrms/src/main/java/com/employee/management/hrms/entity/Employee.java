@@ -1,9 +1,17 @@
 package com.employee.management.hrms.entity;
 
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "employees")
@@ -11,7 +19,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int employeeId;
+    private Long employeeId;
 
     private String employeeCode;
 
@@ -35,20 +43,20 @@ public class Employee {
     private Employee manager;
 
     // Employees under Manager
-    @OneToMany
+    @OneToMany(mappedBy = "manager")
     private List<Employee> subordinates;
 
     // Leave Requests
-    @OneToMany
+    @OneToMany(mappedBy = "employee")
     private List<LeaveRequest> leaveRequests;
     
-    // Getters & Setters
+   // Getters & Setters
 
-	public int getEmployeeId() {
+	public Long getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(Long employeeId) {
 		this.employeeId = employeeId;
 	}
 

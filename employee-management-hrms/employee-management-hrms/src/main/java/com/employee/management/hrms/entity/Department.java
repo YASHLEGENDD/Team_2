@@ -1,30 +1,36 @@
  package com.employee.management.hrms.entity;
 
- import jakarta.persistence.*;
- import java.util.List;
+import java.util.List;
 
- @Entity
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
  @Table(name = "departments")
  public class Department {
 
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private int departmentId;
+     private Long departmentId;
 
      private String departmentName;
 
      private String description;
 
-     @OneToMany
+     @OneToMany(mappedBy = "department")
      private List<Employee> employees;
      
-     // Getters & Setters
+  // Getters & Setters
 
-	 public int getDepartmentId() {
+	 public Long getDepartmentId() {
 		 return departmentId;
 	 }
 
-	 public void setDepartmentId(int departmentId) {
+	 public void setDepartmentId(Long departmentId) {
 		 this.departmentId = departmentId;
 	 }
 

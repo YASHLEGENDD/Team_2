@@ -1,7 +1,13 @@
 package com.employee.management.hrms.entity;
 
-import jakarta.persistence.*;
 import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "leave_types")
@@ -9,22 +15,22 @@ public class LeaveType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int leaveTypeId;
+    private Long leaveTypeId;
 
     private String leaveName; // Casual, Sick, Earned
 
     private int maxDaysPerYear;
 
-    @OneToMany
+    @OneToMany(mappedBy = "leaveType")
     private List<LeaveRequest> leaveRequests;
     
  // Getters & Setters
 
-	public int getLeaveTypeId() {
+	public Long getLeaveTypeId() {
 		return leaveTypeId;
 	}
 
-	public void setLeaveTypeId(int leaveTypeId) {
+	public void setLeaveTypeId(Long leaveTypeId) {
 		this.leaveTypeId = leaveTypeId;
 	}
 
