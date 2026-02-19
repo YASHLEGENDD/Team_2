@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="container">
+<button id="logoutBtn">Logout</button>
+
+    <h1>Admin Dashboard</h1>
+
+    <div class="cards">
+        <div class="card">
+            <h2>25</h2>
+            <p>Total Employees</p>
+        </div>
+        <div class="card">
+            <h2>4</h2>
+            <p>On Leave</p>
+        </div>
+        <div class="card">
+            <h2>2</h2>
+            <p>Pending Requests</p>
+        </div>
+
+        <div class="card department-card" id="departmentBtn">
+         <h2>🏢</h2>
+         <p>Departments</p>
+</div>
+
+
+    </div>
+
+    <h2 class="section-title">Employee List</h2>
+    <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="employeeTableBody">
+        <!-- Dynamic content will come here -->
+    </tbody>
+</table>
+
+    <h2 class="section-title">Manager Leave Requests</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="managerLeaveBody">
+        <!-- Manager leave requests will appear here -->
+    </tbody>
+</table>
+    
+    
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

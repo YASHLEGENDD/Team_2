@@ -1,0 +1,107 @@
+/*GLOBAL */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+}
+
+body{
+    min-height:100vh;
+    /* background: linear-gradient(135deg,#0f7c8d,#0b4f59); */
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px;
+    background-image: url(bg.png);
+}
+
+/*  CONTAINER */
+
+.info-container{
+    width:100%;
+    max-width:900px;
+}
+
+/* GLASS CARD */
+
+.info-card{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    border-radius:20px;
+    padding:50px;
+    color:white;
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ems-logo {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.info-card h1{
+    margin-bottom:20px;
+    font-size:32px;
+}
+
+.info-card p{
+    line-height:1.6;
+    margin-bottom:20px;
+    color:#e0f7fa;
+}
+
+.features{
+    margin-bottom:25px;
+}
+
+.features h3{
+    margin-bottom:10px;
+}
+
+.features ul{
+    list-style:none;
+}
+
+.features li{
+    margin-bottom:8px;
+}
+
+/* BUTTON */
+
+.home-btn{
+    padding:12px 30px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#0f7c8d;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.home-btn:hover{
+    transform:scale(1.05);
+    background:#e0f7fa;
+}
+
+/* ESPONSIVE */
+
+@media(max-width:768px){
+
+    .info-card{
+        padding:30px;
+    }
+
+    .info-card h1{
+        font-size:24px;
+    }
+
+}

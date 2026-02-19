@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Portal</title>
+    <link rel="stylesheet" href="employee.css">
+</head>
+<body>
+
+<header>
+    <div class="overlay">
+        <h1>Employee Dashboard</h1>
+    </div>
+</header>
+
+<div class="container">
+<button id="logoutBtn">Logout</button>
+
+    <!-- Profile Section -->
+    <section class="card">
+        <h2>Personal Profile</h2>
+
+        <form id="profileForm">
+            <label>Employee Name</label>
+            <input type="name" placeholder="Enter Your Name" >
+
+            <label>Email</label>
+            <input type="email" placeholder="Update your email">
+
+            <label>Post</label>
+            <input type="text" placeholder="Update your post">
+
+            <label>Department</label>
+            <input type="text" placeholder="Update department">
+
+            <button type="submit" class="btn-primary">Update Profile</button>
+        </form>
+    </section>
+
+    <!-- Leave Application Section -->
+    <section class="card">
+        <h2> Apply for Leave</h2>
+
+        <form id="leaveForm">
+            <label>Leave Type</label>
+            <select>
+                <option>Casual Leave</option>
+                <option>Sick Leave</option>
+                <option>Annual Leave</option>
+            </select>
+
+            <label>From Date</label>
+            <input type="date">
+
+            <label>To Date</label>
+            <input type="date">
+
+            <label>Reason</label>
+            <textarea rows="3"></textarea>
+
+            <div class="button-group">
+                <button type="submit" class="btn-primary">Send Request</button>
+                <button type="reset" class="btn-cancel">Cancel</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Leave Status -->
+    <section class="card">
+        <h2> Leave Status</h2>
+        <div class="status pending">Pending Approval</div>
+    </section>
+
+    <!-- Leave History -->
+    <section class="card">
+        <h2>Leave History</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sick Leave</td>
+                    <td>01-01-2026</td>
+                    <td>03-01-2026</td>
+                    <td class="approved">Approved</td>
+                </tr>
+                <tr>
+                    <td>Casual Leave</td>
+                    <td>15-12-2025</td>
+                    <td>16-12-2025</td>
+                    <td class="rejected">Rejected</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+</div>
+<script src="employee.js"></script>
+</body>
+</html>

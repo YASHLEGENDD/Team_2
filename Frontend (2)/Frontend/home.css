@@ -1,0 +1,182 @@
+/*  GLOBAL  */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f7c8d, #0b4f59);
+    min-height: 100vh;
+    padding: 40px;
+    background-image: url(bg.png);   /* OUTER MARGIN */
+    max-width: 100%;
+    height: auto;
+}
+
+/*  HEADER  */
+
+.top-header {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 20px 5%;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+/* 
+ */
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ems-logo {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+ /*  */
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #a5f3fc;
+    
+}
+
+/* HERO GLASS CARD  */
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px;
+    
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    color: white;
+
+}
+
+
+
+
+/* LEFT CONTENT */
+
+.hero-left {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.small-title {
+    font-weight: 600;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    color: #c8f7ff;
+}
+
+.hero-left h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.description {
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #e0f7fa;
+}
+
+
+
+/* BUTTON */
+
+.info-btn {
+    padding: 12px 30px;
+    background: white;
+    color: #0f7c8d;
+    border: none;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.info-btn:hover {
+    background: #b35df4;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* RIGHT IMAGE */
+
+.hero-right {
+    flex: 1;
+}
+
+.hero-right img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (max-width: 992px) {
+
+    /* Stack hero vertically */
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+    }
+
+    /* Remove side padding */
+    .hero-left {
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+
+    /* Reduce heading size */
+    .hero-left h1 {
+        font-size: 26px;
+    }
+
+    /* Navbar stacked */
+    .top-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav {
+        margin-top: 10px;
+    }
+
+    nav a {
+        display: block;
+        margin: 10px 0;
+    }
+
+}
+

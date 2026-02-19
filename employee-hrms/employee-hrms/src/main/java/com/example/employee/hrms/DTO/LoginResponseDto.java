@@ -6,7 +6,10 @@ public class LoginResponseDto {
 
     private String token;
     private String tokenType = "Bearer";
-    private Long userId;
+
+    // ✅ FIX: employeeId (NOT userId)
+    private Long employeeId;
+
     private String fullName;
     private String email;
     private String role;
@@ -16,7 +19,7 @@ public class LoginResponseDto {
     public LoginResponseDto() {}
 
     public LoginResponseDto(String token,
-                            Long userId,
+                            Long employeeId,
                             String fullName,
                             String email,
                             String role,
@@ -24,7 +27,7 @@ public class LoginResponseDto {
                             LocalDateTime expiresAt) {
 
         this.token = token;
-        this.userId = userId;
+        this.employeeId = employeeId;
         this.fullName = fullName;
         this.email = email;
         this.role = role;
@@ -32,28 +35,65 @@ public class LoginResponseDto {
         this.expiresAt = expiresAt;
     }
 
-    // Getters & Setters
+    // ================= GETTERS & SETTERS =================
 
-    public String getToken() { return token; }
-    public void setToken(String token) { this.token = token; }
+    public String getToken() {
+        return token;
+    }
 
-    public String getTokenType() { return tokenType; }
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public String getTokenType() {
+        return tokenType;
+    }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public Long getEmployeeId() {
+        return employeeId;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public String getFullName() {
+        return fullName;
+    }
 
-    public LocalDateTime getIssuedAt() { return issuedAt; }
-    public void setIssuedAt(LocalDateTime issuedAt) { this.issuedAt = issuedAt; }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-    public LocalDateTime getExpiresAt() { return expiresAt; }
-    public void setExpiresAt(LocalDateTime expiresAt) { this.expiresAt = expiresAt; }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public LocalDateTime getIssuedAt() {
+        return issuedAt;
+    }
+
+    public void setIssuedAt(LocalDateTime issuedAt) {
+        this.issuedAt = issuedAt;
+    }
+
+    public LocalDateTime getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(LocalDateTime expiresAt) {
+        this.expiresAt = expiresAt;
+    }
 }

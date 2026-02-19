@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- Left Side Content -->
+    <div class="left-section">
+
+        <!-- 🔥 CLICKABLE LOGO (BACK TO HOME) -->
+        <a href="home.html" class="logo-link">
+            <h1 class="logo-title">
+                <img src="logo1.png" alt="Logo" class="ems-logo">
+                EMALTS
+            </h1>
+        </a>
+
+        <h2>Employee Management & Leave Tracking System</h2>
+        <p>
+            Manage your leaves and employee activities easily 
+            with our smart and secure platform.
+        </p>
+    </div>
+
+    <!-- Right Side Login Card -->
+    <div class="login-card">
+        
+        <h3>Welcome Back</h3>
+        <p class="sub-text">Login to continue</p>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Email" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+
+            <button type="submit">Login</button>
+
+            <p class="register-text">
+                Don't have an account?
+                <a href="register.html">Register</a>
+            </p>
+
+            <p id="errorMsg"></p>
+        </form>
+    </div>
+
+</div>
+
+<script src="login.js"></script>
+</body>
+</html>

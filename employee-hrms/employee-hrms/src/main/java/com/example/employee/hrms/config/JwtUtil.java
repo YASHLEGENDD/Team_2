@@ -17,7 +17,8 @@ public class JwtUtil {
     private static final String SECRET_KEY =
             "placement_platform_secret_key_2026_secure_123456";
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 5; // 5 hours
+    private static final long EXPIRATION_TIME =
+            1000 * 60 * 60 * 5; // 5 hours
 
     private Key getSignKey() {
         return Keys.hmacShaKeyFor(
@@ -25,7 +26,7 @@ public class JwtUtil {
         );
     }
 
-    // Generate token with role
+    // ===================== GENERATE TOKEN =====================
     public String generateToken(String username, String role) {
 
         return Jwts.builder()
@@ -39,26 +40,30 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Extract username
+    // ===================== EXTRACT USERNAME =====================
     public String extractUsername(String token) {
         return getClaims(token).getSubject();
     }
 
-    // Validate token
+    // ===================== VALIDATE TOKEN =====================
     public boolean validateToken(String token, UserDetails userDetails) {
+
         final String username = extractUsername(token);
+
         return username.equals(userDetails.getUsername())
                 && !isTokenExpired(token);
     }
 
-    // Check expiration
+    // ===================== CHECK EXPIRY =====================
     private boolean isTokenExpired(String token) {
         return getClaims(token)
                 .getExpiration()
                 .before(new Date());
     }
 
+    // ===================== PARSE CLAIMS =====================
     private Claims getClaims(String token) {
+
         return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
                 .build()

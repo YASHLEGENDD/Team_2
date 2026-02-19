@@ -11,7 +11,9 @@ import com.example.employee.hrms.DTO.LoginRequestDto;
 import com.example.employee.hrms.DTO.LoginResponseDto;
 import com.example.employee.hrms.DTO.RegisterRequestDto;
 import com.example.employee.hrms.config.JwtUtil;
+import com.example.employee.hrms.entity.Employee;
 import com.example.employee.hrms.entity.User;
+import com.example.employee.hrms.repository.EmployeeRepository;
 import com.example.employee.hrms.repository.UserRepository;
 import com.example.employee.hrms.service.AuthService;
 
@@ -19,22 +21,25 @@ import com.example.employee.hrms.service.AuthService;
 public class AuthServiceImp implements AuthService {
 
     private final UserRepository userRepository;
+    private final EmployeeRepository employeeRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
     public AuthServiceImp(UserRepository userRepository,
+                          EmployeeRepository employeeRepository,
                           AuthenticationManager authenticationManager,
                           JwtUtil jwtUtil,
                           PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
+        this.employeeRepository = employeeRepository;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
     }
 
-    // REGISTER
+    // ===================== REGISTER =====================
     @Override
     public String register(RegisterRequestDto request) {
 
@@ -49,16 +54,21 @@ public class AuthServiceImp implements AuthService {
         user.setRole(
                 request.getRole() != null && !request.getRole().isBlank()
                         ? request.getRole()
-                        : "USER"
+                        : "EMPLOYEE"
         );
         user.setAccountStatus("ACTIVE");
 
         userRepository.save(user);
 
-        return "User Registered Successfully";
+        // ✅ Auto-create Employee
+        Employee employee = new Employee();
+        employee.setUser(user);
+        employeeRepository.save(employee);
+
+        return "User registered successfully";
     }
 
-    // LOGIN
+    // ===================== LOGIN =====================
     @Override
     public LoginResponseDto login(LoginRequestDto request) {
 
@@ -72,17 +82,24 @@ public class AuthServiceImp implements AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        Employee employee = employeeRepository
+                .findByUser_Email(user.getEmail());
+
+        if (employee == null) {
+            throw new RuntimeException("Employee record not found");
+        }
+
         String token = jwtUtil.generateToken(
                 user.getEmail(),
                 user.getRole()
         );
 
         LocalDateTime issuedAt = LocalDateTime.now();
-        LocalDateTime expiresAt = issuedAt.plusHours(5);
+        LocalDateTime expiresAt = issuedAt.plusHours(10);
 
         return new LoginResponseDto(
                 token,
-                user.getUserId(),
+                employee.getEmployeeId(), // ✅ FIXED
                 user.getFullName(),
                 user.getEmail(),
                 user.getRole(),

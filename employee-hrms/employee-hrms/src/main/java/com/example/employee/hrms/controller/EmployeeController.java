@@ -1,4 +1,4 @@
-  package com.example.employee.hrms.controller;
+package com.example.employee.hrms.controller;
 
 import java.util.List;
 
@@ -25,14 +25,14 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    // APPLY LEAVE 
+    // ===================== APPLY LEAVE =====================
     @PostMapping("/apply-leave")
     public ResponseEntity<LeaveRequest> applyLeave(
             @RequestBody LeaveRequest leaveRequest) {
         return ResponseEntity.ok(leaveService.applyLeave(leaveRequest));
     }
 
-    // GET MY LEAVES 
+    // ===================== GET MY LEAVES =====================
     @GetMapping("/leaves/{employeeId}")
     public ResponseEntity<List<LeaveRequest>> getMyLeaves(
             @PathVariable Long employeeId) {
@@ -40,7 +40,7 @@ public class EmployeeController {
                 leaveService.getLeavesByEmployee(employeeId));
     }
 
-    // UPDATE PROFILE
+    // ===================== UPDATE PROFILE =====================
     @PutMapping("/profile/{id}")
     public ResponseEntity<Employee> updateProfile(
             @PathVariable Long id,
