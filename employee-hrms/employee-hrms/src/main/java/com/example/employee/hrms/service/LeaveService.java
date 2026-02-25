@@ -1,22 +1,17 @@
 package com.example.employee.hrms.service;
 
 import java.util.List;
-
 import com.example.employee.hrms.entity.LeaveRequest;
 
 public interface LeaveService {
 
-    LeaveRequest applyLeave(LeaveRequest leaveRequest);
+    LeaveRequest applyLeave(LeaveRequest leaveRequest, String email);
 
-    LeaveRequest approveLeave(Long leaveRequestId);
+    List<LeaveRequest> getLeavesByEmail(String email);
 
-    LeaveRequest rejectLeave(Long leaveRequestId);
+    List<LeaveRequest> getLeavesForManager(String managerEmail);
 
-    LeaveRequest getLeaveById(Long leaveRequestId);
+    LeaveRequest approveLeave(Long leaveId, String managerEmail);
 
-    List<LeaveRequest> getAllLeaves();
-
-    List<LeaveRequest> getLeavesByEmployee(Long employeeId);
-
+    LeaveRequest rejectLeave(Long leaveId, String managerEmail);
 }
-

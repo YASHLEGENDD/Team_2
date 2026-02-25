@@ -3,7 +3,7 @@ package com.example.employee.hrms.DTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public class RegisterRequestDto {
+public class UserRequestDto {
 
     @NotBlank
     private String fullName;

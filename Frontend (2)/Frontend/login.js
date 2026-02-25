@@ -17,7 +17,6 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             body: JSON.stringify({ email, password })
         });
 
-        // ✅ Handle non-JSON responses safely
         if (!response.ok) {
             const text = await response.text();
             throw new Error(text || "Invalid email or password");
@@ -25,20 +24,27 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
         const data = await response.json();
 
+        // Save token
         localStorage.setItem("token", data.token);
 
+        // Save role separately (IMPORTANT FIX)
+        const cleanRole = data.role.replace("ROLE_", "");
+        localStorage.setItem("role", cleanRole);
+
+        // Save user object
         const user = {
-            employeeId: data.employeeId, // ✅ FIXED
+            employeeId: data.employeeId,
             fullName: data.fullName,
             email: data.email,
-            role: data.role
+            role: cleanRole
         };
 
         localStorage.setItem("user", JSON.stringify(user));
 
-        if (data.role === "EMPLOYEE") {
+        // Redirect based on role
+        if (cleanRole === "EMPLOYEE") {
             window.location.href = "employee.html";
-        } else if (data.role === "ADMIN") {
+        } else if (cleanRole === "ADMIN") {
             window.location.href = "admin.html";
         } else {
             window.location.href = "manager.html";

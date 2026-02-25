@@ -5,80 +5,46 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.employee.hrms.entity.Department;
+import com.example.employee.hrms.DTO.EmployeeRequestDto;
+import com.example.employee.hrms.DTO.UserRequestDto;
 import com.example.employee.hrms.entity.Employee;
-import com.example.employee.hrms.entity.LeaveType;
-import com.example.employee.hrms.service.DepartmentService;
 import com.example.employee.hrms.service.EmployeeService;
-import com.example.employee.hrms.service.LeaveTypeService;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/admin")
-@PreAuthorize("hasRole('ADMIN')")
+@CrossOrigin(origins = {
+        "http://127.0.0.1:5500",
+        "http://localhost:5500"
+})
 public class AdminController {
 
-    private final DepartmentService departmentService;
     private final EmployeeService employeeService;
-    private final LeaveTypeService leaveTypeService;
 
-    public AdminController(
-            DepartmentService departmentService,
-            EmployeeService employeeService,
-            LeaveTypeService leaveTypeService) {
-
-        this.departmentService = departmentService;
+    public AdminController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.leaveTypeService = leaveTypeService;
     }
 
-    // CREATE DEPARTMENT
-    @PostMapping("/departments")
-    public ResponseEntity<Department> createDepartment(
-            @RequestBody Department department) {
+    // CREATE USER
+    @PostMapping("/create-user")
+    public ResponseEntity<Long> createUser(
+            @Valid @RequestBody UserRequestDto request) {
 
-        return ResponseEntity.ok(
-                departmentService.createDepartment(department)
-        );
-    }
-
-    // GET ALL DEPARTMENTS  ADDED
-    @GetMapping("/departments")
-    public ResponseEntity<List<Department>> getAllDepartments() {
-
-        return ResponseEntity.ok(
-                departmentService.getAllDepartments()
-        );
+        return ResponseEntity.ok(employeeService.createUser(request));
     }
 
     // CREATE EMPLOYEE
-    @PostMapping("/employees")
-    public ResponseEntity<Employee> createEmployee(
-            @RequestBody Employee employee) {
+    @PostMapping("/create-employee")
+    public ResponseEntity<String> createEmployee(
+            @Valid @RequestBody EmployeeRequestDto request) {
 
-        return ResponseEntity.ok(
-                employeeService.createEmployee(employee)
-        );
+        return ResponseEntity.ok(employeeService.createEmployee(request));
     }
 
-    // GET ALL EMPLOYEES
+    //  THIS FIXES YOUR DASHBOARD
     @GetMapping("/employees")
     public ResponseEntity<List<Employee>> getAllEmployees() {
-
-        return ResponseEntity.ok(
-                employeeService.getAllEmployees()
-        );
-    }
-
-    // CREATE LEAVE TYPE
-    @PostMapping("/leave-types")
-    public ResponseEntity<LeaveType> createLeaveType(
-            @RequestBody LeaveType leaveType) {
-
-        return ResponseEntity.ok(
-                leaveTypeService.createLeaveType(leaveType)
-        );
+        return ResponseEntity.ok(employeeService.getAllEmployees());
     }
 }

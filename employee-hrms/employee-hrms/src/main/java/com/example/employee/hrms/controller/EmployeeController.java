@@ -3,7 +3,7 @@ package com.example.employee.hrms.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.employee.hrms.entity.Employee;
@@ -13,7 +13,10 @@ import com.example.employee.hrms.service.LeaveService;
 
 @RestController
 @RequestMapping("/api/employee")
-@PreAuthorize("hasRole('EMPLOYEE')")
+@CrossOrigin(origins = {
+        "http://127.0.0.1:5500",
+        "http://localhost:5500"
+})
 public class EmployeeController {
 
     private final LeaveService leaveService;
@@ -25,33 +28,61 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    // ===================== APPLY LEAVE =====================
+    // APPLY LEAVE 
     @PostMapping("/apply-leave")
     public ResponseEntity<LeaveRequest> applyLeave(
-            @RequestBody LeaveRequest leaveRequest) {
-        return ResponseEntity.ok(leaveService.applyLeave(leaveRequest));
+            @RequestBody LeaveRequest leaveRequest,
+            Authentication authentication) {
+
+        String email = authentication.getName();
+
+        LeaveRequest savedLeave =
+                leaveService.applyLeave(leaveRequest, email);
+
+        return ResponseEntity.ok(savedLeave);
     }
 
-    // ===================== GET MY LEAVES =====================
-    @GetMapping("/leaves/{employeeId}")
+    // GET MY LEAVES 
+    @GetMapping("/my-leaves")
     public ResponseEntity<List<LeaveRequest>> getMyLeaves(
-            @PathVariable Long employeeId) {
+            Authentication authentication) {
+
+        String email = authentication.getName();
+
         return ResponseEntity.ok(
-                leaveService.getLeavesByEmployee(employeeId));
+                leaveService.getLeavesByEmail(email));
     }
 
-    // ===================== UPDATE PROFILE =====================
-    @PutMapping("/profile/{id}")
+    // GET MY PROFILE 
+    @GetMapping("/profile")
+    public ResponseEntity<Employee> getMyProfile(
+            Authentication authentication) {
+
+        String email = authentication.getName();
+
+        return ResponseEntity.ok(
+                employeeService.getEmployeeByEmail(email));
+    }
+
+    //  UPDATE PROFILE 
+    @PutMapping("/profile")
     public ResponseEntity<Employee> updateProfile(
-            @PathVariable Long id,
-            @RequestBody Employee updatedEmployee) {
+            @RequestBody Employee updatedEmployee,
+            Authentication authentication) {
 
-        Employee employee = employeeService.getEmployeeById(id);
+        String email = authentication.getName();
 
-        employee.setDepartment(updatedEmployee.getDepartment());
-        employee.getUser().setEmail(updatedEmployee.getUser().getEmail());
-        employee.getUser().setFullName(updatedEmployee.getUser().getFullName());
+        Employee employee =
+                employeeService.getEmployeeByEmail(email);
 
-        return ResponseEntity.ok(employeeService.createEmployee(employee));
+        // Allow safe updates only
+        employee.getUser().setFullName(
+                updatedEmployee.getUser().getFullName());
+
+        employee.getUser().setEmail(
+                updatedEmployee.getUser().getEmail());
+
+        return ResponseEntity.ok(
+                employeeService.save(employee));
     }
 }

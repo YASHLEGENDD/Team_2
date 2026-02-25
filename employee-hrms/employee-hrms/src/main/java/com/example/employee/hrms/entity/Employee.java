@@ -4,18 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -51,17 +42,22 @@ public class Employee {
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
+    // Self reference (Manager)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
     private Employee manager;
 
+    // ðŸ”´ IGNORE to prevent infinite recursion
     @OneToMany(mappedBy = "manager")
+    @JsonIgnore
     private List<Employee> subordinates;
 
+    // ðŸ”´ IGNORE to prevent infinite recursion
     @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private List<LeaveRequest> leaveRequests;
 
-    // Constructors
+    //  CONSTRUCTORS 
 
     public Employee() {
     }
@@ -75,12 +71,14 @@ public class Employee {
         this.department = department;
     }
 
+    //  LIFECYCLE 
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
+    // GETTERS & SETTERS
 
     public Long getEmployeeId() {
         return employeeId;

@@ -3,15 +3,9 @@ package com.example.employee.hrms.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -38,10 +32,12 @@ public class Department {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    // ðŸ”´ VERY IMPORTANT: Prevent infinite recursion
     @OneToMany(mappedBy = "department")
+    @JsonIgnore
     private List<Employee> employees;
 
-    // Constructors
+    // CONSTRUCTORS 
 
     public Department() {
     }
@@ -51,6 +47,8 @@ public class Department {
         this.description = description;
     }
 
+    //  LIFECYCLE 
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -59,7 +57,7 @@ public class Department {
         }
     }
 
-    // Getters and Setters
+    // GETTERS & SETTERS 
 
     public Long getDepartmentId() {
         return departmentId;
@@ -70,7 +68,8 @@ public class Department {
     }
 
     public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName != null ? departmentName.toUpperCase() : null;
+        this.departmentName =
+                departmentName != null ? departmentName.toUpperCase() : null;
     }
 
     public String getDescription() {
@@ -89,4 +88,3 @@ public class Department {
         return employees;
     }
 }
-

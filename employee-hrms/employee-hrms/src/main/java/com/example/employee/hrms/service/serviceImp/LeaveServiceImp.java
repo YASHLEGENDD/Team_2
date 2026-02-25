@@ -1,5 +1,6 @@
 package com.example.employee.hrms.service.serviceImp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -8,79 +9,111 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.employee.hrms.entity.Employee;
 import com.example.employee.hrms.entity.LeaveRequest;
 import com.example.employee.hrms.entity.LeaveStatus;
-import com.example.employee.hrms.entity.LeaveType;
-import com.example.employee.hrms.exception.ResourceNotFoundException;
 import com.example.employee.hrms.repository.EmployeeRepository;
-import com.example.employee.hrms.repository.LeaveRequestRepository;
-import com.example.employee.hrms.repository.LeaveTypeRepository;
+import com.example.employee.hrms.repository.LeaveRepository;
 import com.example.employee.hrms.service.LeaveService;
 
 @Service
-@Transactional
 public class LeaveServiceImp implements LeaveService {
 
-    private final LeaveRequestRepository leaveRequestRepository;
+    private final LeaveRepository leaveRepository;
     private final EmployeeRepository employeeRepository;
-    private final LeaveTypeRepository leaveTypeRepository;
 
-    public LeaveServiceImp(
-            LeaveRequestRepository leaveRequestRepository,
-            EmployeeRepository employeeRepository,
-            LeaveTypeRepository leaveTypeRepository) {
-        this.leaveRequestRepository = leaveRequestRepository;
+    public LeaveServiceImp(LeaveRepository leaveRepository,
+                           EmployeeRepository employeeRepository) {
+        this.leaveRepository = leaveRepository;
         this.employeeRepository = employeeRepository;
-        this.leaveTypeRepository = leaveTypeRepository;
     }
 
+    // APPLY LEAVE
     @Override
-    public LeaveRequest applyLeave(LeaveRequest leaveRequest) {
+    @Transactional
+    public LeaveRequest applyLeave(LeaveRequest leaveRequest, String email) {
 
-        Long employeeId = leaveRequest.getEmployee().getEmployeeId();
-        Long leaveTypeId = leaveRequest.getLeaveType().getLeaveTypeId();
-
-        Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Employee not found"));
-
-        LeaveType leaveType = leaveTypeRepository.findById(leaveTypeId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Leave Type not found"));
+        Employee employee = employeeRepository
+                .findByUser_Email(email)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
 
         leaveRequest.setEmployee(employee);
-        leaveRequest.setLeaveType(leaveType);
+       // leaveRequest.setAppliedDate(LocalDateTime.now());
         leaveRequest.setStatus(LeaveStatus.PENDING);
 
-        return leaveRequestRepository.save(leaveRequest);
+        return leaveRepository.save(leaveRequest);
     }
 
+    //GET MY LEAVES
     @Override
-    public List<LeaveRequest> getLeavesByEmployee(Long employeeId) {
+    public List<LeaveRequest> getLeavesByEmail(String email) {
 
-        return leaveRequestRepository
-                .findByEmployee_EmployeeId(employeeId);
+        Employee employee = employeeRepository
+                .findByUser_Email(email)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        return leaveRepository.findByEmployee(employee);
     }
 
-	@Override
-	public LeaveRequest approveLeave(Long leaveRequestId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    //  GET LEAVES FOR MANAGER 
+    @Override
+    public List<LeaveRequest> getLeavesForManager(String managerEmail) {
 
-	@Override
-	public LeaveRequest rejectLeave(Long leaveRequestId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        Employee manager = employeeRepository
+                .findByUser_Email(managerEmail)
+                .orElseThrow(() -> new RuntimeException("Manager not found"));
 
-	@Override
-	public LeaveRequest getLeaveById(Long leaveRequestId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return leaveRepository.findByEmployee_ManagerAndStatus(manager, LeaveStatus.PENDING);
+    }
 
-	@Override
-	public List<LeaveRequest> getAllLeaves() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    //  APPROVE LEAVE 
+    @Override
+    @Transactional
+    public LeaveRequest approveLeave(Long leaveId, String managerEmail) {
+
+        Employee manager = employeeRepository
+                .findByUser_Email(managerEmail)
+                .orElseThrow(() -> new RuntimeException("Manager not found"));
+
+        LeaveRequest leave = leaveRepository.findById(leaveId)
+                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+
+        Employee employeeManager = leave.getEmployee().getManager();
+
+        if (employeeManager == null ||
+            !employeeManager.getEmployeeId().equals(manager.getEmployeeId())) {
+
+            throw new RuntimeException("Not authorized to approve this leave");
+        }
+
+        leave.setStatus(LeaveStatus.APPROVED);
+        leave.setApprovedBy(manager.getEmployeeId());
+        leave.setApprovedDate(LocalDateTime.now());
+
+        return leaveRepository.save(leave);
+    }
+
+    //  REJECT LEAVE 
+    @Override
+    @Transactional
+    public LeaveRequest rejectLeave(Long leaveId, String managerEmail) {
+
+        Employee manager = employeeRepository
+                .findByUser_Email(managerEmail)
+                .orElseThrow(() -> new RuntimeException("Manager not found"));
+
+        LeaveRequest leave = leaveRepository.findById(leaveId)
+                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+
+        Employee employeeManager = leave.getEmployee().getManager();
+
+        if (employeeManager == null ||
+            !employeeManager.getEmployeeId().equals(manager.getEmployeeId())) {
+
+            throw new RuntimeException("Not authorized to reject this leave");
+        }
+
+        leave.setStatus(LeaveStatus.REJECTED);
+        leave.setApprovedBy(manager.getEmployeeId());
+        leave.setApprovedDate(LocalDateTime.now());
+
+        return leaveRepository.save(leave);
+    }
 }

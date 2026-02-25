@@ -28,7 +28,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // ===================== REGISTER =====================
+    // REGISTER 
     @PostMapping("/register")
     public ResponseEntity<String> register(
             @Valid @RequestBody RegisterRequestDto request) {
@@ -40,7 +40,7 @@ public class AuthController {
                 .body(message);
     }
 
-    // ===================== LOGIN =====================
+    //  LOGIN
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(
             @Valid @RequestBody LoginRequestDto loginRequest) {
